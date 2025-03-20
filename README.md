@@ -1,20 +1,20 @@
 # Go Downloader
 
-一个使用 Go 语言编写的多线程下载器，用于高效地下载大文件。
+A multi-threaded downloader written in Go for efficient large file downloads.
 
-## 特性
+## Features
 
-- 多线程并发下载，提高下载速度
-- 实时显示下载进度、速度和预计剩余时间
-- 支持断点续传和分片下载
-- 自动检测服务器是否支持范围请求
-- 自动回退到单线程下载（当服务器不支持范围请求时）
-- 失败重试机制
-- 简单易用的命令行界面
+- Multi-threaded concurrent downloads for increased speed
+- Real-time display of download progress, speed, and estimated time remaining
+- Support for resumable downloads and chunked downloading
+- Automatic detection of server support for range requests
+- Automatic fallback to single-threaded download (when server doesn't support range requests)
+- Failure retry mechanism
+- Simple and easy-to-use command line interface
 
-## 安装
+## Installation
 
-### 从源码安装
+### From Source
 
 ```bash
 git clone https://github.com/yourusername/go-downloader.git
@@ -22,34 +22,34 @@ cd go-downloader
 go build -o godownloader ./cmd/downloader
 ```
 
-### 使用 Go Install
+### Using Go Install
 
 ```bash
 go install github.com/yourusername/go-downloader/cmd/downloader@latest
 ```
 
-## 使用方法
+## Usage
 
-### 命令行
+### Command Line
 
 ```bash
-# 基本用法
+# Basic usage
 godownloader -url https://example.com/largefile.zip
 
-# 指定输出文件
+# Specify output file
 godownloader -url https://example.com/largefile.zip -output myfile.zip
 
-# 指定线程数
+# Specify thread count
 godownloader -url https://example.com/largefile.zip -threads 8
 
-# 静默模式
+# Quiet mode
 godownloader -url https://example.com/largefile.zip -quiet
 
-# 查看帮助
+# View help
 godownloader -help
 ```
 
-### 作为库使用
+### As a Library
 
 ```go
 package main
@@ -62,15 +62,15 @@ import (
 )
 
 func main() {
-    // 基本用法
+    // Basic usage
     dl := downloader.New("https://example.com/largefile.zip", "output.zip", 4)
     err := dl.Download()
     if err != nil {
-        fmt.Printf("下载失败: %v\n", err)
+        fmt.Printf("Download failed: %v\n", err)
         os.Exit(1)
     }
 
-    // 使用自定义选项
+    // Using custom options
     options := downloader.Options{
         OutputPath: "custom-output.zip",
         NumThreads: 8,
@@ -80,32 +80,32 @@ func main() {
     dl = downloader.WithOptions("https://example.com/largefile.zip", options)
     err = dl.Download()
     if err != nil {
-        fmt.Printf("下载失败: %v\n", err)
+        fmt.Printf("Download failed: %v\n", err)
         os.Exit(1)
     }
 }
 ```
 
-## 命令行参数
+## Command Line Parameters
 
-| 参数       | 描述                     | 默认值                |
-| ---------- | ------------------------ | --------------------- |
-| `-url`     | 要下载的 URL             | -                     |
-| `-output`  | 输出文件路径             | 从 URL 中提取的文件名 |
-| `-threads` | 下载线程数               | CPU 核心数            |
-| `-retries` | 失败重试次数             | 3                     |
-| `-quiet`   | 静默模式，只显示错误信息 | false                 |
-| `-version` | 显示版本信息             | false                 |
+| Parameter  | Description                          | Default                     |
+| ---------- | ------------------------------------ | --------------------------- |
+| `-url`     | URL to download                      | -                           |
+| `-output`  | Output file path                     | Filename extracted from URL |
+| `-threads` | Number of download threads           | Number of CPU cores         |
+| `-retries` | Number of retry attempts on failure  | 3                           |
+| `-quiet`   | Quiet mode, only show error messages | false                       |
+| `-version` | Display version information          | false                       |
 
-## 工作原理
+## How It Works
 
-1. 发送 HEAD 请求获取文件大小和范围支持信息
-2. 如果服务器支持范围请求，则将文件分割为多个块
-3. 为每个块创建一个 worker 并发下载
-4. 实时跟踪和显示下载进度
-5. 合并所有块为最终文件
-6. 清理临时文件
+1. Sends a HEAD request to get file size and range support information
+2. If the server supports range requests, splits the file into multiple chunks
+3. Creates a worker for each chunk and downloads concurrently
+4. Tracks and displays download progress in real-time
+5. Merges all chunks into the final file
+6. Cleans up temporary files
 
-## 许可证
+## License
 
 MIT
