@@ -93,7 +93,7 @@ func (p *Progress) createProgressBar() {
 	completed := int(float64(width) * float64(p.Downloaded) / float64(p.TotalSize))
 
 	bar := "["
-	for i := 0; i < width; i++ {
+	for i := range width {
 		if i < completed {
 			bar += "="
 		} else if i == completed && completed < width {

@@ -102,7 +102,7 @@ func CalculateChunks(url string, fileSize int64, numChunks int, tempDir string) 
 	chunks := make([]*Chunk, numChunks)
 
 	var start, end int64
-	for i := 0; i < numChunks; i++ {
+	for i := range numChunks {
 		start = int64(i) * chunkSize
 		if i == numChunks-1 {
 			end = fileSize - 1
